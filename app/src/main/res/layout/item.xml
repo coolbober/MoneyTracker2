@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/mainMargin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/minHeightItem">
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/ItemNameText"
+        android:background="@color/item_name_bg"
+        android:textSize="@dimen/nameTextView"
+        tools:text="Молоко"
+        android:paddingLeft="@dimen/minPadding"
+        android:gravity="center_vertical"
+        android:layout_weight="4"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/item_price"
+        style="@style/ItemPriceText"
+        android:background="@color/item_price_bg"
+        android:textSize="@dimen/priceTextView"
+        tools:text="35 ₽"
+        android:paddingLeft="@dimen/minPadding"
+        android:paddingRight="@dimen/minPadding"
+        android:gravity="center"
+        android:layout_weight="0"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

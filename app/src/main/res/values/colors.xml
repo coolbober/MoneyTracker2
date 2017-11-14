@@ -3,6 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
     <color name="backgroundText">#84c0c5</color>
-    <color name="text">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="item_name_bg">#FCC418</color>
+    <color name="item_price_bg">#E9B11C</color>
 </resources>
