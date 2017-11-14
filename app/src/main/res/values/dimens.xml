@@ -2,4 +2,15 @@
 <resources>
     <dimen name="textSize">20sp</dimen>
     <dimen name="main_width">60dp</dimen>
+    <dimen name="minHeightItem">65dp</dimen>
+
+    <dimen name="nameTextView">20sp</dimen>
+    <dimen name="priceTextView">24sp</dimen>
+
+    <dimen name="minPadding">16dp</dimen>
+
+    <dimen name="mainMargin">5dp</dimen>
+    <dimen name="topMargin">15dp</dimen>
+    <dimen name="sideMargin">5dp</dimen>
+    <dimen name="buttomMargin">5dp</dimen>
 </resources>

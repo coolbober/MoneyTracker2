@@ -2,4 +2,6 @@
     <string name="app_name">MoneyTracker2</string>
     <string name="title">Название</string>
     <string name="price">0 ₽</string>
+    <string name="ruble">₽</string>
+    <string name="textPrice">250</string>
 </resources>

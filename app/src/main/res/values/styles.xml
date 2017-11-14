@@ -7,5 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="ItemNameText">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="ItemPriceText">
+        <item name="android:textColor">#ffffff</item>
+    </style>
 
 </resources>
