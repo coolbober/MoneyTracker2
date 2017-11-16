@@ -1,8 +1,14 @@
 package com.loftschool.moneytracker2;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +44,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         return new ItemViewHolder(view);
-        //String string = parent.getContext().getString(R.string.ruble);
     }
 
     @Override
@@ -50,6 +55,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
     @Override
     public int getItemCount() {
+
         return items.size();
     }
 
@@ -69,9 +75,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         }
 
         void bind(Item item) {
-            name.setText(String.valueOf(item.getName()));
-            price.setText(String.valueOf(item.getPrice()));
-
+            name.setText(item.getName());
+            Resources resources = price.getContext().getResources();
+            String priceInStr = resources.getString(R.string.price, item.getPrice());
+            Spannable text = new SpannableString(priceInStr);
+            text.setSpan(new ForegroundColorSpan(Color.GRAY), priceInStr.length() - 1, priceInStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            price.setText(text);
 
         }
     }
