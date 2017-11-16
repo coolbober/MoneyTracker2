@@ -79,7 +79,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             Resources resources = price.getContext().getResources();
             String priceInStr = resources.getString(R.string.price, item.getPrice());
             Spannable text = new SpannableString(priceInStr);
-            text.setSpan(new ForegroundColorSpan(Color.GRAY), priceInStr.length() - 1, priceInStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            text.setSpan(new ForegroundColorSpan(Color.WHITE), priceInStr.length() - 1, priceInStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             price.setText(text);
 
         }
