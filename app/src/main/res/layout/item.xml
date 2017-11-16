@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/item_name"
-        style="@style/ItemNameText"
+        style="@style/ItemText"
         android:background="@color/item_name_bg"
         android:textSize="@dimen/nameTextView"
         tools:text="Молоко"
@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/item_price"
-        style="@style/ItemPriceText"
+        style="@style/ItemText"
         android:background="@color/item_price_bg"
         android:textSize="@dimen/priceTextView"
         tools:text="35 ₽"
