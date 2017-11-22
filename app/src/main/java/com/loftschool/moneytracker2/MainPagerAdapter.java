@@ -2,12 +2,11 @@ package com.loftschool.moneytracker2;
 
 
 import android.content.res.Resources;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.View;
+
+import static com.loftschool.moneytracker2.Item.TYPE_EXPENSE;
+import static com.loftschool.moneytracker2.Item.TYPE_INCOME;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
@@ -30,10 +29,10 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case PAGE_EXPENSES: {
 
-                return ItemsFragment.createItemFragment(ItemsFragment.TYPE_EXPENSE);
+                return ItemsFragment.createItemFragment(TYPE_EXPENSE);
             }
             case PAGE_INCOMES: {
-                return ItemsFragment.createItemFragment(ItemsFragment.TYPE_INCOME);
+                return ItemsFragment.createItemFragment(TYPE_INCOME);
             }
             case PAGE_BALANCE:
                 return BalanceFragment.createBalanceFragment(BalanceFragment.TYPE_BALANCE);
