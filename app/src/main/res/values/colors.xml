@@ -11,4 +11,6 @@
 
     <color name="inactive_tab">#a6ffffff</color>
     <color name="active_tab">#ffffff</color>
+
+    <color name="color_add_button">#15A599</color>
 </resources>

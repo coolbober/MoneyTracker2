@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_pattern"
     tools:context="com.loftschool.moneytracker2.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.AppBarLayout>
+    
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
     <LinearLayout
         android:padding="16dp"
@@ -30,7 +48,7 @@
             android:gravity="right"
             android:id="@+id/number"
             android:inputType="number"
-            android:hint="@string/price"
+            android:hint="@string/ruble"
             android:maxLines="1"
             android:layout_width="@dimen/main_width"
             android:layout_height="wrap_content"
@@ -50,5 +68,5 @@
             />
 
     </LinearLayout>
-
-</FrameLayout>
+    </android.support.v7.widget.CardView>
+</android.support.design.widget.CoordinatorLayout>

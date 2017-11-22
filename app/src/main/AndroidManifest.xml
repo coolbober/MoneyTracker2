@@ -19,7 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"/>
+        <activity
+            android:name=".AddActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/add_scr_title"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AddTitle"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
     </application>
 
 </manifest>
