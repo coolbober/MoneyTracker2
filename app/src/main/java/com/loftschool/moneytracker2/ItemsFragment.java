@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static android.widget.Toast.*;
 import static com.loftschool.moneytracker2.Item.TYPE_UNKNOWN;
 
 
@@ -119,15 +120,23 @@ public class ItemsFragment extends Fragment {
     }
 
     private void showError (String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        makeText(getContext(), error, LENGTH_SHORT).show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+       // if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
+         //   Item item = (Item) data.getSerializableExtra(AddActivity.;
+           // Toast.makeText(getContext(), item.name, Toast.LENGTH_LONG).show();
+        //}
         if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
-            Toast.makeText(getContext(), item.name, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), item.name, LENGTH_LONG).show();
+        }
+        if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
+            Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_NUMBER);
+            Toast.makeText(getContext(), item.price, LENGTH_LONG).show();
         }
     }
 

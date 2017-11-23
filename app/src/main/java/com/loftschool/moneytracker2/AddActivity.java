@@ -18,6 +18,7 @@ public class AddActivity extends AppCompatActivity {
 
     public static final String EXTRA_TYPE = "type";
     public static final String RESULT_ITEM = "item";
+    public static final String RESULT_NUMBER = "number";
     public static final int RC_ADD_ITEM = 99;
 
     private EditText name;
@@ -47,7 +48,9 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra(RESULT_ITEM, new Item(name.getText().toString(), 100, type));
+                //result.putExtra(RESULT_ITEM, new Item(name.getText().toString(), 100, type));
+                result.putExtra(RESULT_ITEM, name.getText().toString());
+                result.putExtra(RESULT_NUMBER, price.getText());
                 setResult(RESULT_OK, result);
                 finish();
             }
