@@ -13,15 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.loftschool.moneytracker2.api.AddResult;
 import com.loftschool.moneytracker2.api.Api;
 
 import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static android.widget.Toast.*;
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 import static com.loftschool.moneytracker2.Item.TYPE_UNKNOWN;
 
 
@@ -119,6 +120,37 @@ public class ItemsFragment extends Fragment {
         }).forceLoad();
     }
 
+    private void addItem(final Item item) {
+        getLoaderManager().restartLoader(LOAD_ITEMS, null, new
+                LoaderManager.LoaderCallbacks<AddResult>() {
+                    @Override
+                    public Loader<AddResult> onCreateLoader(int id, Bundle args) {
+                        return new AsyncTaskLoader<AddResult>(getContext()) {
+                            @Override
+                            public AddResult loadInBackground() {
+                                try {
+                                    return api.add(item.name, item.price, item.type).
+                                            execute().body();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    return null;
+                                }
+                            }
+                        };
+                    }
+
+                    @Override
+                    public void onLoadFinished(Loader<AddResult> loader, AddResult data) {
+                        // ...
+                    }
+
+                    @Override
+                    public void onLoaderReset(Loader<AddResult> loader) {
+                    }
+
+                }).forceLoad();
+    }
+
     private void showError (String error) {
         makeText(getContext(), error, LENGTH_SHORT).show();
     }
@@ -126,17 +158,15 @@ public class ItemsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       // if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
-         //   Item item = (Item) data.getSerializableExtra(AddActivity.;
-           // Toast.makeText(getContext(), item.name, Toast.LENGTH_LONG).show();
+        // if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
+        //   Item item = (Item) data.getSerializableExtra(AddActivity.;
+        // Toast.makeText(getContext(), item.name, Toast.LENGTH_LONG).show();
         //}
-        if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
+        if (requestCode == AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
-            Toast.makeText(getContext(), item.name, LENGTH_LONG).show();
-        }
-        if(requestCode ==  AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
-            Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_NUMBER);
-            Toast.makeText(getContext(), item.price, LENGTH_LONG).show();
+            addItem(item);
+
+
         }
     }
 
