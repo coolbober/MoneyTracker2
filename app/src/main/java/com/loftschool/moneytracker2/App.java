@@ -33,7 +33,7 @@ public class App extends Application {
         interceptor.setLevel(BuildConfig.DEBUG ? BODY : NONE);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new HttpLoggingInterceptor())
+                .addInterceptor(interceptor)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
