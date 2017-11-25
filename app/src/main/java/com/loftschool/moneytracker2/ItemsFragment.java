@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.loftschool.moneytracker2.api.AddResult;
 import com.loftschool.moneytracker2.api.Api;
@@ -164,11 +165,13 @@ public class ItemsFragment extends Fragment {
         //}
         if (requestCode == AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
+            Toast.makeText(getContext(), item.name + "\n" +  String.valueOf(item.price) , Toast.LENGTH_LONG).show();
             addItem(item);
 
 
         }
     }
+
 
     ///////////////////////////////////////////////////////////
     //////////////////        AsyncTask      /////////////////
