@@ -108,7 +108,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
                 if (items == null) {
-                showError("Произошла ошибка!");
+                showError(String.valueOf(R.string.errorLoading));
                 }else {
                     adapter.setItems(items);
                 }

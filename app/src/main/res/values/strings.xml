@@ -8,6 +8,8 @@
     <string name="tab_expenses">Расходы</string>
     <string name="tab_incomes">Доходы</string>
     <string name="tab_balance">Баланс</string>
+
+    <string name="errorLoading">Произошла ошибка</string>
     
     <string name="add_scr_title">Новая запись</string>
 
