@@ -7,6 +7,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,16 @@ import java.util.List;
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
     private List<Item> items = Collections.emptyList();
+    private ItemsAdapterListener listener = null;
+    private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
     public void setItems(List<Item> items){
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    public void setListener(ItemsAdapterListener listener) {
+        this.listener = listener;
     }
 
 
@@ -36,7 +43,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Item item = items.get(position);
-        holder.bind(item);
+        holder.bind(item, position, selectedItems.get(position, false), listener);
 
     }
 
@@ -46,12 +53,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         return items.size();
     }
 
+    public void toggleSelection(int pos){
+        if(selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        } else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
         private TextView price;
-
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -61,13 +76,30 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         }
 
-        void bind(Item item) {
+        void bind(final Item item, final int position,boolean selected, final ItemsAdapterListener listener) {
             name.setText(item.name);
             Resources resources = price.getContext().getResources();
             String priceInStr = resources.getString(R.string.price, item.price);
             Spannable text = new SpannableString(priceInStr);
             text.setSpan(new ForegroundColorSpan(Color.WHITE), priceInStr.length() - 1, priceInStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             price.setText(text);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(item, position);
+
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onItemLongClick(item, position);
+                    return true;
+                }
+            });
+            itemView.setActivated(selected);
 
         }
     }
