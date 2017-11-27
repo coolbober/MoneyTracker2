@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -84,14 +85,24 @@ public class ItemsFragment extends Fragment {
         adapter.setListener(new ItemsAdapterListener() {
             @Override
             public void onItemClick(Item item, int position) {
+                if(isInActionMode()){
+                    toggleSelection(position);
+                }
             }
 
             @Override
             public void onItemLongClick(Item item, int position) {
-                if(actionMode != null){
+                if(isInActionMode()){
                     return;
                 }
                 actionMode = ((AppCompatActivity)getActivity()).startSupportActionMode(actionModeCallback);
+                toggleSelection(position);
+            }
+            private void toggleSelection(int position) {
+                adapter.toggleSelection(position);
+            }
+            private boolean isInActionMode(){
+                return actionMode != null;
             }
         });
 
@@ -131,7 +142,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
                 if (items == null) {
-                showError(String.valueOf(R.string.errorLoading));
+                showError(getString(R.string.errorLoading));
                 }else {
                     adapter.setItems(items);
                 }
@@ -143,6 +154,7 @@ public class ItemsFragment extends Fragment {
             }
         }).forceLoad();
     }
+
 
     private void addItem(final Item item) {
         getLoaderManager().restartLoader(LOAD_ITEMS, null, new
@@ -190,6 +202,12 @@ public class ItemsFragment extends Fragment {
         }
     }
 
+    private void removeSelectedItems(){
+        for (int i = adapter.getSelectedItems().size() - 1; i>=0; i--)
+            adapter.remove(adapter.getSelectedItems().get(i));
+
+    }
+
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -205,12 +223,28 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            return false;
+
+            switch (item.getItemId()){
+                case R.id.menu_remove:
+                     showDialog();
+                     return true;
+
+                default:
+                    return false;
+            }
         }
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelection();
             actionMode = null;
         }
     };
+
+    private void showDialog(){
+        DialogFragment dialog = new ConfirmationDialog();
+        dialog.show(getFragmentManager(), "Confirmation");
+
+    }
+
 }

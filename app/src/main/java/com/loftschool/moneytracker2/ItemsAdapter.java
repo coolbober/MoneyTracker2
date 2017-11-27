@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +61,28 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             selectedItems.put(pos, true);
         }
         notifyItemChanged(pos);
+    }
+
+    void clearSelection(){
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    int getSelectedItemCount(){
+        return selectedItems.size();
+    }
+
+    List<Integer> getSelectedItems(){
+        List<Integer> items = new ArrayList<>(selectedItems.size());
+        for (int i=0; i<selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+            }
+            return items;
+    }
+
+    Item remove(int pos){
+        final Item item = items.remove(pos);
+        return item;
     }
 
 

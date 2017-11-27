@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
+    android:background="@drawable/item_bg"
     android:layout_margin="@dimen/mainMargin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,7 +11,6 @@
     <TextView
         android:id="@+id/item_name"
         style="@style/ItemText"
-        android:background="@color/item_name_bg"
         android:textSize="@dimen/nameTextView"
         tools:text="Молоко"
         android:paddingLeft="@dimen/minPadding"
@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/item_price"
         style="@style/ItemText"
-        android:background="@color/item_price_bg"
+        android:background="@color/item_color_shadow"
         android:textSize="@dimen/priceTextView"
         tools:text="35 ₽"
         android:paddingLeft="@dimen/minPadding"

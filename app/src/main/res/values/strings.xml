@@ -10,6 +10,8 @@
     <string name="tab_balance">Баланс</string>
 
     <string name="errorLoading">Произошла ошибка</string>
+
+    <string name="confirm_remove">Уверены?</string>
     
     <string name="add_scr_title">Новая запись</string>
 
