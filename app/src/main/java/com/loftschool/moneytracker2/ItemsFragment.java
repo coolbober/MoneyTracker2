@@ -1,5 +1,6 @@
 package com.loftschool.moneytracker2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -198,15 +199,14 @@ public class ItemsFragment extends Fragment {
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
             Toast.makeText(getContext(), item.name + "\n" +  String.valueOf(item.price) , Toast.LENGTH_LONG).show();
             addItem(item);
-
         }
     }
 
     private void removeSelectedItems(){
         for (int i = adapter.getSelectedItems().size() - 1; i>=0; i--)
             adapter.remove(adapter.getSelectedItems().get(i));
-
     }
+
 
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
         @Override
@@ -241,9 +241,21 @@ public class ItemsFragment extends Fragment {
         }
     };
 
+
     private void showDialog(){
         DialogFragment dialog = new ConfirmationDialog();
         dialog.show(getFragmentManager(), "Confirmation");
+        dialog.setListener(new ConfirmationDialogListener() {
+            @Override
+            public void onPositiveClick(DialogInterface dialog, int button) {
+                removeSelectedItems();
+                actionMode.finish();
+            }
+
+            @Override
+            public void onNegativeClick(DialogInterface dialog, int button) {
+            }
+        });
 
     }
 

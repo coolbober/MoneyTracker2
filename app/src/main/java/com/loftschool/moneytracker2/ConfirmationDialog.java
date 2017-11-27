@@ -14,7 +14,10 @@ public class ConfirmationDialog extends DialogFragment {
 
     private ItemsAdapter adapter;
     private ActionMode actionMode;
-    private void removeSelectedItems(Item remove){
+    private ConfirmationDialogListener listener = null;
+
+    public  void setListener(ConfirmationDialogListener listener) {
+          this.listener = listener;
     }
 
     @NonNull
@@ -27,8 +30,7 @@ public class ConfirmationDialog extends DialogFragment {
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            for (int i = adapter.getSelectedItems().size() - 1; i>=0; i--)
-                                removeSelectedItems(adapter.remove(adapter.getSelectedItems().get(i)));
+                            listener.onPositiveClick(dialog, id);
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, null)
@@ -39,5 +41,6 @@ public class ConfirmationDialog extends DialogFragment {
                         }
                     });
             return builder.create();
-    }
+   }
 }
+
