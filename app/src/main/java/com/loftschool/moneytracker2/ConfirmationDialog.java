@@ -12,7 +12,6 @@ import android.view.ActionMode;
 public class ConfirmationDialog extends DialogFragment {
 
 
-    private ItemsAdapter adapter;
     private ActionMode actionMode;
     private ConfirmationDialogListener listener = null;
 
@@ -28,12 +27,17 @@ public class ConfirmationDialog extends DialogFragment {
                     .setTitle(R.string.app_name)
                     .setMessage(R.string.confirm_remove)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            listener.onPositiveClick(dialog, id);
-                        }
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                     listener.onPositiveClick(dialog, id);
+                                }
                     })
-                    .setNegativeButton(android.R.string.cancel, null)
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    listener.onNegativeClick(dialog, id);
+                                }
+                    })
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {

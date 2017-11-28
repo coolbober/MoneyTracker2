@@ -24,7 +24,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     private ItemsAdapterListener listener = null;
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
-    public void setItems(List<Item> items){
+    public void setItems(List<Item> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -32,7 +32,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     public void setListener(ItemsAdapterListener listener) {
         this.listener = listener;
     }
-
 
 
     @Override
@@ -54,8 +53,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         return items.size();
     }
 
-    public void toggleSelection(int pos){
-        if(selectedItems.get(pos, false)) {
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
             selectedItems.delete(pos);
         } else {
             selectedItems.put(pos, true);
@@ -63,24 +62,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyItemChanged(pos);
     }
 
-    void clearSelection(){
+    void clearSelection() {
         selectedItems.clear();
         notifyDataSetChanged();
     }
 
-    int getSelectedItemCount(){
-        return selectedItems.size();
-    }
-
-    List<Integer> getSelectedItems(){
+    List<Integer> getSelectedItems() {
         List<Integer> items = new ArrayList<>(selectedItems.size());
-        for (int i=0; i<selectedItems.size(); i++) {
+        for (int i = 0; i < selectedItems.size(); i++) {
             items.add(selectedItems.keyAt(i));
-            }
-            return items;
+        }
+        return items;
     }
 
-    Item remove(int pos){
+    Item remove(int pos) {
         final Item item = items.remove(pos);
         return item;
     }
@@ -98,7 +93,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         }
 
-        void bind(final Item item, final int position,boolean selected, final ItemsAdapterListener listener) {
+        void bind(final Item item, final int position, boolean selected, final ItemsAdapterListener listener) {
             name.setText(item.name);
             Resources resources = price.getContext().getResources();
             String priceInStr = resources.getString(R.string.price, item.price);
@@ -122,7 +117,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
                 }
             });
             itemView.setActivated(selected);
-
         }
     }
 

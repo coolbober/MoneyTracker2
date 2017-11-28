@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -100,7 +99,10 @@ public class ItemsFragment extends Fragment {
                 toggleSelection(position);
             }
             private void toggleSelection(int position) {
+
                 adapter.toggleSelection(position);
+                if (actionMode != null)
+                    actionMode.setTitle(getString(R.string.selected).concat(" ").concat((String.valueOf(adapter.getSelectedItems().size()))));
             }
             private boolean isInActionMode(){
                 return actionMode != null;
@@ -232,6 +234,7 @@ public class ItemsFragment extends Fragment {
                 default:
                     return false;
             }
+
         }
 
         @Override
@@ -243,7 +246,7 @@ public class ItemsFragment extends Fragment {
 
 
     private void showDialog(){
-        DialogFragment dialog = new ConfirmationDialog();
+        ConfirmationDialog dialog = new ConfirmationDialog();
         dialog.show(getFragmentManager(), "Confirmation");
         dialog.setListener(new ConfirmationDialogListener() {
             @Override
@@ -254,9 +257,9 @@ public class ItemsFragment extends Fragment {
 
             @Override
             public void onNegativeClick(DialogInterface dialog, int button) {
+                actionMode.finish();
             }
         });
-
     }
 
 }
