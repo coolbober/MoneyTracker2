@@ -13,4 +13,8 @@
     <color name="active_tab">#ffffff</color>
 
     <color name="color_add_button">#15A599</color>
+
+    <color name="item_color_shadow">#38383838</color>
+    <color name="item_color">#fcc31e</color>
+    <color name="item_color_selected">#985305</color>
 </resources>

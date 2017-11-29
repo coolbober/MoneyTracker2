@@ -8,7 +8,13 @@
     <string name="tab_expenses">Расходы</string>
     <string name="tab_incomes">Доходы</string>
     <string name="tab_balance">Баланс</string>
-    
+
+    <string name="errorLoading">Произошла ошибка</string>
+
+    <string name="confirm_remove">Уверены?</string>
+    <string name="menu_remove">Удалить</string>
+    <string name="selected">Выбрано:</string>
+
     <string name="add_scr_title">Новая запись</string>
 
     <string-array name="tabs_titles">
