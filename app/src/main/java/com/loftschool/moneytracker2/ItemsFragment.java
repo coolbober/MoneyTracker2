@@ -44,6 +44,9 @@ public class ItemsFragment extends Fragment {
     private Api api;
 
     private ActionMode actionMode;
+//    public Object onRetainNonConfigurationInstance() {
+//        return actionMode;
+//    }
 
     public static  ItemsFragment createItemFragment(String type) {
         ItemsFragment fragment = new ItemsFragment();
@@ -58,6 +61,7 @@ public class ItemsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
         type = getArguments().getString(KEY_TYPE, TYPE_UNKNOWN);
         if (type.equals(TYPE_UNKNOWN)) {
@@ -82,7 +86,9 @@ public class ItemsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
 
+        //setRetainInstance(true);
         adapter.setListener(new ItemsAdapterListener() {
+
             @Override
             public void onItemClick(Item item, int position) {
                 if(isInActionMode()){

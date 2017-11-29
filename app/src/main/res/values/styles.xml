@@ -17,7 +17,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:actionModeBackground">@color/colorPrimary</item>
-        <item name="android:windowActionModeOverlay">true</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="ItemText">

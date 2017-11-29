@@ -26,10 +26,6 @@
             android:label="@string/add_scr_title"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="stateAlwaysVisible">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
     </application>
 
