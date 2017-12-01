@@ -13,6 +13,7 @@
     <color name="active_tab">#ffffff</color>
 
     <color name="color_add_button">#15A599</color>
+    <color name="color_login_text">#7ECAB1</color>
 
     <color name="item_color_shadow">#38383838</color>
     <color name="item_color">#fcc31e</color>
