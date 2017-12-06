@@ -41,6 +41,7 @@ public class App extends Application {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(new AuthInterceptor())
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()

@@ -80,6 +80,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         return item;
     }
 
+
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name;

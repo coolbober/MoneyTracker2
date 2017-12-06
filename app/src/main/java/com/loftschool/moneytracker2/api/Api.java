@@ -20,4 +20,7 @@ public interface Api {
                         @Query("type") String type);
     @GET("auth")
     Call<AuthResult> auth (@Query("social_user_id") String socialUserId);
+
+    @POST("items/remove")
+    Call<RemoveResult> remove(@Query("id") int id);
 }
