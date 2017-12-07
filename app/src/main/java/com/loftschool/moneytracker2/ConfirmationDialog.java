@@ -11,7 +11,6 @@ import android.view.ActionMode;
 
 public class ConfirmationDialog extends DialogFragment {
 
-
     private ActionMode actionMode;
     private ConfirmationDialogListener listener = null;
 

@@ -231,7 +231,7 @@ public class ItemsFragment extends Fragment {
 //                }).forceLoad();
 //    }
 
-    private void removeItem(final int id) {
+    private void removeItem( int id) {
         api.remove(id).enqueue(new Callback<RemoveResult>() {
             @Override
             public void onResponse(Call<RemoveResult> call, Response<RemoveResult> response) {
@@ -263,9 +263,9 @@ public class ItemsFragment extends Fragment {
     }
 
     private void removeSelectedItems(){
-        for (int i = adapter.getSelectedItems().size() - 1; i>=0; i--) {
-            adapter.remove(adapter.getSelectedItems().get(i));
-            removeItem(getId());
+        for (int i = adapter.getItemCount() - 1; i >= 0; i--) {
+            Item item = adapter.remove(adapter.getSelectedItems().get(i));
+            removeItem(item.id);
         }
         loadItems();
     }
