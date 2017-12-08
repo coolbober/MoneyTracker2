@@ -49,9 +49,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
     @Override
     public int getItemCount() {
-
         return items.size();
     }
+
+    public int getSelectedItemCount() {
+
+        return selectedItems.size();
+    }
+
 
     public void toggleSelection(int pos) {
         if (selectedItems.get(pos, false)) {
@@ -67,7 +72,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
-    List<Integer> getSelectedItems() {
+    List<Integer> getSelectedItemsIndex() {
         List<Integer> items = new ArrayList<>(selectedItems.size());
         for (int i = 0; i < selectedItems.size(); i++) {
             items.add(selectedItems.keyAt(i));

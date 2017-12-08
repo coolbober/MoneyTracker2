@@ -110,7 +110,7 @@ public class ItemsFragment extends Fragment {
 
                 adapter.toggleSelection(position);
                 if (actionMode != null)
-                    actionMode.setTitle(getString(R.string.selected).concat(" ").concat((String.valueOf(adapter.getSelectedItems().size()))));
+                    actionMode.setTitle(getString(R.string.selected).concat(" ").concat((String.valueOf(adapter.getSelectedItemsIndex().size()))));
             }
             private boolean isInActionMode(){
                 return actionMode != null;
@@ -263,8 +263,8 @@ public class ItemsFragment extends Fragment {
     }
 
     private void removeSelectedItems(){
-        for (int i = adapter.getItemCount() - 1; i >= 0; i--) {
-            Item item = adapter.remove(adapter.getSelectedItems().get(i));
+        for (int i = adapter.getSelectedItemCount() - 1; i >= 0; i--) {
+            Item item = adapter.remove(adapter.getSelectedItemsIndex().get(i));
             removeItem(item.id);
         }
         loadItems();
