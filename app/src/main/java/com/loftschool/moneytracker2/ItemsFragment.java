@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,7 @@ public class ItemsFragment extends Fragment {
     private static final int LOAD_ADD = 1;
     private static final int LOAD_REMOVE = 2;
     private static final String KEY_TYPE = "TYPE";
+    SwipeRefreshLayout refresh;
 
     private  String type = TYPE_UNKNOWN;
 
@@ -88,6 +90,14 @@ public class ItemsFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
 
         adapter.setListener(new ItemsAdapterListener() {
 
@@ -157,6 +167,7 @@ public class ItemsFragment extends Fragment {
                 }else {
                     adapter.setItems(items);
                 }
+                refresh.setRefreshing(false);
             }
 
             @Override
@@ -189,7 +200,9 @@ public class ItemsFragment extends Fragment {
                     @Override
                     public void onLoadFinished(Loader<AddResult> loader, AddResult data) {
                        // adapter.updateId(item, data.id);
-                       // adapter.notifyDataSetChanged();
+                        // adapter.notifyDataSetChanged();
+                       // loadItems();
+                        //adapter.notifyItemInserted(0);
 
                     }
 
@@ -231,13 +244,15 @@ public class ItemsFragment extends Fragment {
 //                }).forceLoad();
 //    }
 
-    private void removeItem( int id) {
+    private void removeItem(final int id) {
         api.remove(id).enqueue(new Callback<RemoveResult>() {
             @Override
             public void onResponse(Call<RemoveResult> call, Response<RemoveResult> response) {
                 //adapter.notifyDataSetChanged();
                 if (response.isSuccessful())
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
+                    //loadItems();
+                    adapter.notifyItemRemoved(id);
                 else {
                     showError("Ошибка запроса!");
                 }
