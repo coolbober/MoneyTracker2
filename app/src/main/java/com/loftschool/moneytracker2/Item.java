@@ -19,4 +19,7 @@ public class Item implements Serializable {
         this.type = type;
     }
 
+    public int getId() {
+        return id;
+    }
 }

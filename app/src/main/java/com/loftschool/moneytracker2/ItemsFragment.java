@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,13 +20,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.loftschool.moneytracker2.api.AddResult;
 import com.loftschool.moneytracker2.api.Api;
+import com.loftschool.moneytracker2.api.RemoveResult;
 
 import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static android.widget.Toast.LENGTH_SHORT;
@@ -36,7 +41,10 @@ import static com.loftschool.moneytracker2.Item.TYPE_UNKNOWN;
 public class ItemsFragment extends Fragment {
 
     private static final int LOAD_ITEMS = 0;
+    private static final int LOAD_ADD = 1;
+    private static final int LOAD_REMOVE = 2;
     private static final String KEY_TYPE = "TYPE";
+    SwipeRefreshLayout refresh;
 
     private  String type = TYPE_UNKNOWN;
 
@@ -44,9 +52,6 @@ public class ItemsFragment extends Fragment {
     private Api api;
 
     private ActionMode actionMode;
-//    public Object onRetainNonConfigurationInstance() {
-//        return actionMode;
-//    }
 
     public static  ItemsFragment createItemFragment(String type) {
         ItemsFragment fragment = new ItemsFragment();
@@ -86,7 +91,14 @@ public class ItemsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
 
-        //setRetainInstance(true);
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
+
         adapter.setListener(new ItemsAdapterListener() {
 
             @Override
@@ -108,7 +120,7 @@ public class ItemsFragment extends Fragment {
 
                 adapter.toggleSelection(position);
                 if (actionMode != null)
-                    actionMode.setTitle(getString(R.string.selected).concat(" ").concat((String.valueOf(adapter.getSelectedItems().size()))));
+                    actionMode.setTitle(getString(R.string.selected).concat(" ").concat((String.valueOf(adapter.getSelectedItemsIndex().size()))));
             }
             private boolean isInActionMode(){
                 return actionMode != null;
@@ -155,6 +167,7 @@ public class ItemsFragment extends Fragment {
                 }else {
                     adapter.setItems(items);
                 }
+                refresh.setRefreshing(false);
             }
 
             @Override
@@ -166,7 +179,7 @@ public class ItemsFragment extends Fragment {
 
 
     private void addItem(final Item item) {
-        getLoaderManager().restartLoader(LOAD_ITEMS, null, new
+        getLoaderManager().restartLoader(LOAD_ADD, null, new
                 LoaderManager.LoaderCallbacks<AddResult>() {
                     @Override
                     public Loader<AddResult> onCreateLoader(int id, Bundle args) {
@@ -186,7 +199,11 @@ public class ItemsFragment extends Fragment {
 
                     @Override
                     public void onLoadFinished(Loader<AddResult> loader, AddResult data) {
-                        // ...
+                       // adapter.updateId(item, data.id);
+                        // adapter.notifyDataSetChanged();
+                       // loadItems();
+                        //adapter.notifyItemInserted(0);
+
                     }
 
                     @Override
@@ -194,6 +211,57 @@ public class ItemsFragment extends Fragment {
                     }
 
                 }).forceLoad();
+    }
+
+//    private void removeItem(final Item item) {
+//        getLoaderManager().restartLoader(LOAD_REMOVE, null, new
+//                LoaderManager.LoaderCallbacks<RemoveResult>() {
+//                    @SuppressLint("StaticFieldLeak")
+//                    @Override
+//                    public Loader<RemoveResult> onCreateLoader(int id, Bundle args) {
+//                        return new AsyncTaskLoader<RemoveResult>(getContext()) {
+//                            @Override
+//                            public RemoveResult loadInBackground() {
+//                                try {
+//                                    return api.remove(item.id).execute().body();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                    return null;
+//                                }
+//                            }
+//                        };
+//                    }
+//
+//                    @Override
+//                    public void onLoadFinished(Loader<RemoveResult> loader, RemoveResult data) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoaderReset(Loader<RemoveResult> loader) {
+//
+//                    }
+//                }).forceLoad();
+//    }
+
+    private void removeItem(final int id) {
+        api.remove(id).enqueue(new Callback<RemoveResult>() {
+            @Override
+            public void onResponse(Call<RemoveResult> call, Response<RemoveResult> response) {
+                //adapter.notifyDataSetChanged();
+                if (response.isSuccessful())
+                    //adapter.notifyDataSetChanged();
+                    //loadItems();
+                    adapter.notifyItemRemoved(id);
+                else {
+                    showError("Ошибка запроса!");
+                }
+            }
+            @Override
+            public void onFailure(Call<RemoveResult> call, Throwable t) {
+                showError("Error");
+            }
+        });
     }
 
     private void showError (String error) {
@@ -205,14 +273,16 @@ public class ItemsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK) {
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
-            Toast.makeText(getContext(), item.name + "\n" +  String.valueOf(item.price) , Toast.LENGTH_LONG).show();
             addItem(item);
         }
     }
 
     private void removeSelectedItems(){
-        for (int i = adapter.getSelectedItems().size() - 1; i>=0; i--)
-            adapter.remove(adapter.getSelectedItems().get(i));
+        for (int i = adapter.getSelectedItemCount() - 1; i >= 0; i--) {
+            Item item = adapter.remove(adapter.getSelectedItemsIndex().get(i));
+            removeItem(item.id);
+        }
+        loadItems();
     }
 
 
